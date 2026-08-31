@@ -2,9 +2,9 @@ import pymysql
 
 def get_connection():
     return pymysql.connect(
-        host="mysql.railway.internal",
+        host="zephyr.proxy.rlwy.net",
         user="root",
-        password="SRngbIgSRqxoCuyVZiFrQNbericfRpos",
+        password="SRngbIgSRqxoCuyViFrQNbericfRpos",
         database="railway",
-        port=3306
+        port=45336
     )

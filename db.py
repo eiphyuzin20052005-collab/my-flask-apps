@@ -2,8 +2,9 @@ import pymysql
 
 def get_connection():
     return pymysql.connect(
-        host="localhost",
+        host="mysql.railway.internal",
         user="root",
-        password="root",
-        database="MPS"
+        password="SRngbIgSRqxoCuyVZiFrQNbericfRpos",
+        database="railway",
+        port=3306
     )

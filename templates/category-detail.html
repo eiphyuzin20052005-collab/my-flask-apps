@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.category_name }} - MathSolver AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Safe MathJax CDN Config -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            chtml: {
+                displayAlign: 'left'
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.min.js"></script>
+
+    <!-- MathLive Virtual Keyboard CDN -->
+    <script defer src="https://unpkg.com/mathlive"></script>
+
+    <style>
+        body {
+            background-color: #0b0714;
+            color: #f3e8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bg-card {
+            background-color: #130c25;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .bg-card-hover:hover {
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+        }
+        .purple-glow {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.25);
+        }
+        
+        /* Custom Scrollbar Styles */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #130c25;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2a1b4e;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3b276b;
+        }
+
+        /* MathLive Dark Theme & Typography Fix */
+        math-field {
+            background-color: #1a1235 !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+            border-radius: 0.5rem !important;
+            font-size: 1.1rem !important;
+            padding: 8px 12px !important;
+            width: 100% !important;
+        }
+        math-field:focus-within {
+            border-color: #a855f7 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25) !important;
+        }
+
+        /* Deep MathJax Word-Wrap Override */
+        mjx-container, .mjx-chtml, .MathJax {
+            display: inline-block !important;
+            max-width: 100% !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            word-break: break-all !important;
+            overflow-wrap: anywhere !important;
+        }
+        
+        mjx-math {
+            white-space: normal !important;
+            word-break: break-all !important;
+        }
+
+        #practice-problem-title {
+            max-width: 100% !important;
+            word-break: break-all !important;
+            overflow-wrap: anywhere !important;
+            white-space: normal !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-purple-900/40 bg-[#0b0714]/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:bg-purple-600/30 transition-all">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <span class="text-sm font-semibold text-purple-200 group-hover:text-white transition-colors">Back to Home</span>
+            </a>
+            
+            <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300 border border-purple-500/30">
+                    Category ID: #{{ category.category_id }}
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- Hero Section -->
+        <div class="bg-card rounded-2xl p-6 sm:p-8 mb-8 relative overflow-hidden purple-glow">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10">
+                <div class="inline-block px-3 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider mb-3">
+                    Level: {{ category.level if category.level else 'General' }}
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">
+                    {{ category.category_name }}
+                </h1>
+                <p class="text-purple-300/70 text-sm max-w-2xl">
+                    Explore formulas, step-by-step solutions, and interactive practice problems generated for {{ category.category_name }}.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Formulas Section -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-card rounded-xl p-6">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2 border-b border-purple-900/40 pb-3">
+                        <i class="fa-solid fa-square-root-variable text-purple-400"></i> Key Formulas
+                    </h2>
+
+                    {% if formulas %}
+                        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar">
+                            {% for formula in formulas %}
+                            <div class="p-4 rounded-lg bg-[#1a1235] border border-purple-500/10 hover:border-purple-500/30 transition-all">
+                                <p class="text-xs font-semibold text-purple-300 uppercase tracking-wider mb-2">
+                                    {{ formula.formula_name }}
+                                </p>
+                                <div class="text-purple-100 font-mono text-sm py-1">
+                                    ${{ formula.latex_formula }}$
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-6 text-purple-400/60 text-sm">
+                            <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
+                            No formulas added for this category yet.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Column: Problems & Practice Section -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-card rounded-xl p-6">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center justify-between border-b border-purple-900/40 pb-3">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-purple-400"></i> Problem Sets
+                        </span>
+                        <span class="text-xs bg-purple-900/60 text-purple-300 px-2.5 py-1 rounded-full border border-purple-500/20">
+                            {{ problems|length }} Problems
+                        </span>
+                    </h2>
+
+                    {% if problems %}
+                        <!-- Problem Sets Scrollable Container -->
+                        <div class="space-y-4 max-h-[550px] overflow-y-auto pr-2 custom-scrollbar">
+                            {% for problem in problems %}
+                            <div class="bg-[#181130] rounded-xl p-5 border border-purple-500/10 bg-card-hover transition-all">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/20">
+                                        Problem {{ loop.index }}
+                                    </span>
+                                </div>
+
+                                <!-- Question Text -->
+                                <div class="text-white font-medium text-base mb-4">
+                                    {{ problem.question_text | format_math | safe }}
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-purple-900/30">
+                                    <button onclick="toggleSolution('steps-{{ problem.problem_id }}')" class="text-xs text-purple-300 hover:text-purple-100 flex items-center gap-1.5 transition-colors">
+                                        <i class="fa-solid fa-eye text-purple-400"></i> Toggle Solution
+                                    </button>
+
+                                    <button onclick='openPracticeModal({{ problem.problem_id }}, {{ problem.question_text | tojson }}, {{ (problem.steps if problem.steps else "") | tojson }})' class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-900/30 transition-all flex items-center gap-2">
+                                        <i class="fa-solid fa-pen-to-square"></i> Practice Yourself
+                                    </button>
+                                </div>
+
+                                <!-- Hidden Solution Steps -->
+                                <div id="steps-{{ problem.problem_id }}" class="hidden mt-4 pt-4 border-t border-purple-900/40 bg-[#120a26] p-4 rounded-lg">
+                                    <h4 class="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-2">Step-by-Step Solution:</h4>
+                                    {% if problem.steps %}
+                                        <div class="text-sm text-purple-200 whitespace-pre-line leading-relaxed font-mono">
+                                            {{ problem.steps | format_math | safe }}
+                                        </div>
+                                    {% else %}
+                                        <p class="text-xs text-purple-400/60">No solution steps provided for this problem.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-12 text-purple-400/60">
+                            <i class="fa-solid fa-square-minus text-4xl mb-3 block"></i>
+                            <p class="text-sm">No problems found in this category.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Student Registration Modal -->
+    <div id="register-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#130c25] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl purple-glow relative">
+            
+            <button onclick="closeRegisterModal()" class="absolute top-4 right-4 text-purple-400 hover:text-white text-lg w-8 h-8 flex items-center justify-center rounded-full hover:bg-purple-900/50 transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-user-graduate text-purple-400"></i> Student Info Required
+            </h3>
+            <p class="text-xs text-purple-300/70 mb-6">Please enter your details to start practicing and save your progress.</p>
+            
+            <form onsubmit="handleUserRegistration(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase mb-1">Your Name</label>
+                    <input type="text" id="reg-user-name" required class="w-full bg-[#1a1235] border border-purple-500/30 rounded-lg px-4 py-2.5 text-white placeholder-purple-400/40 focus:outline-none focus:border-purple-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase mb-1">Email Address</label>
+                    <input type="email" id="reg-user-email" required placeholder="example@email.com" class="w-full bg-[#1a1235] border border-purple-500/30 rounded-lg px-4 py-2.5 text-white placeholder-purple-400/40 focus:outline-none focus:border-purple-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase mb-1">Class / Grade</label>
+                    <input type="text" id="reg-user-class" required placeholder="e.g. Grade 11, CS-2026" class="w-full bg-[#1a1235] border border-purple-500/30 rounded-lg px-4 py-2.5 text-white placeholder-purple-400/40 focus:outline-none focus:border-purple-400 text-sm">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-lg shadow-purple-900/40 transition-all">
+                    Start Practice Session
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Practice Interactive Modal -->
+    <div id="practice-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#130c25] border border-purple-500/30 rounded-2xl p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl purple-glow relative overflow-hidden">
+            
+            <div class="flex items-start justify-between border-b border-purple-900/40 pb-4 mb-4 gap-4">
+                <div class="w-full overflow-hidden">
+                    <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider block mb-1">Practice Yourself Mode</span>
+                    <h3 id="practice-problem-title" class="text-lg font-bold text-white"></h3>
+                </div>
+                
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="closePracticeModal()" class="text-purple-400 hover:text-white p-2">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-grow overflow-y-auto space-y-3 pr-2 custom-scrollbar min-h-[150px] max-h-[250px]" id="practice-steps-box">
+                <!-- Solved Steps Render Here -->
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-purple-900/40">
+                <div id="feedback-msg" class="text-xs font-semibold mb-2 min-h-[1rem] text-purple-300"></div>
+                
+                <div class="space-y-3">
+                    <div>
+                        <math-field id="user-input" placeholder="Type your step here (Use virtual keyboard for √, fractions)..."></math-field>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="checkUserAnswer()" class="flex-1 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-circle-check"></i> Verify Step
+                        </button>
+                        
+                        <button onclick="showNextStep()" class="flex-1 py-2.5 rounded-lg bg-amber-600/30 hover:bg-amber-600/50 text-amber-200 border border-amber-500/40 text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-forward-step"></i> Show Next Step
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-900/40 bg-[#0b0714] py-6 mt-12 text-center text-xs text-purple-300/50">
+        <p>&copy; 2026 MathSolver AI. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Session dynamic checking
+        const isUserLoggedIn = {{ 'true' if session.get('user_logged_in') else 'false' }};
+        const loggedInUserId = {{ session.get('user_id') if session.get('user_id') else 'null' }};
+        const loggedInUserEmail = "{{ session.get('user_email') if session.get('user_email') else '' }}";
+
+        var appState = {
+            isStudentRegistered: isUserLoggedIn,
+            userId: loggedInUserId,
+            userEmail: loggedInUserEmail || localStorage.getItem('user_email') || null,
+            currentProblemId: null,
+            currentQuestionText: "",
+            currentStepsArray: [],
+            visibleStepCount: 0
+        };
+
+        function toggleSolution(elementId) {
+            var el = document.getElementById(elementId);
+            if (el) {
+                el.classList.toggle('hidden');
+                if (!el.classList.contains('hidden') && window.MathJax) {
+                    MathJax.typesetPromise([el]);
+                }
+            }
+        }
+
+        /* Practice Yourself Button Click Handler */
+        function openPracticeModal(problemId, questionText, stepsStr) {
+            appState.currentProblemId = problemId;
+            appState.currentQuestionText = questionText;
+            appState.currentStepsArray = stepsStr ? stepsStr.split('\n').filter(s => s.trim() !== '') : [];
+            appState.visibleStepCount = 0;
+
+            var titleEl = document.getElementById('practice-problem-title');
+            var rawText = questionText ? questionText.trim() : '';
+            
+            if (rawText) {
+                titleEl.innerHTML = rawText;
+            } else {
+                titleEl.innerHTML = '';
+            }
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([titleEl]).catch(function(err) { console.error(err); });
+            }
+
+            // User သည် Login ဝင်ထားပါက (သို့မဟုတ် dynamic status မှတ်ထားပါက) Modal Form စေခိုင်းခြင်းမပြုဘဲ Practice Modal ကို တိုက်ရိုက်ပွင့်စေပါမည်
+            if (isUserLoggedIn || appState.isStudentRegistered) {
+                showPracticeModal();
+            } else {
+                document.getElementById('register-modal').classList.remove('hidden');
+                document.getElementById('practice-modal').classList.add('hidden');
+            }
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('register-modal').classList.add('hidden');
+        }
+
+        function closePracticeModal() {
+            document.getElementById('practice-modal').classList.add('hidden');
+        }
+
+        function showPracticeModal() {
+            document.getElementById('register-modal').classList.add('hidden');
+            document.getElementById('practice-modal').classList.remove('hidden');
+            document.getElementById('feedback-msg').innerText = "Enter the first step or click 'Show Next Step' if you want help.";
+            document.getElementById('feedback-msg').style.color = "#c084fc";
+            
+            var mathInput = document.getElementById('user-input');
+            if (mathInput) mathInput.value = '';
+
+            renderPracticeSteps();
+        }
+
+        function handleUserRegistration(e) {
+            e.preventDefault();
+            var name = document.getElementById('reg-user-name').value.trim();
+            var email = document.getElementById('reg-user-email').value.trim();
+            var userClass = document.getElementById('reg-user-class').value.trim();
+
+            if (!name || !email || !userClass) return;
+
+            fetch('/api/register-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_name: name, email: email, user_class: userClass })
+            })
+            .then(res => res.json())
+            .then(data => {
+                appState.isStudentRegistered = true;
+                appState.userId = data.user_id || null;
+                appState.userEmail = email;
+                
+                // User Profile Page History တွင် ပေါ်စေရန် Email ကို localStorage သို့ သိမ်းခြင်း
+                localStorage.setItem('user_email', email);
+                
+                showPracticeModal();
+            })
+            .catch(err => {
+                console.error("Registration endpoint bypassed/failed:", err);
+                appState.isStudentRegistered = true;
+                appState.userEmail = email;
+                localStorage.setItem('user_email', email);
+                showPracticeModal();
+            });
+        }
+
+        function renderPracticeSteps() {
+            var box = document.getElementById('practice-steps-box');
+            box.innerHTML = '';
+
+            if (appState.visibleStepCount === 0) {
+                box.innerHTML = '<div class="text-xs text-purple-400/60 p-3 italic text-center">Click "Show Next Step" to reveal steps or type your step below.</div>';
+                return;
+            }
+
+            for (var i = 0; i < appState.visibleStepCount; i++) {
+                var stepDiv = document.createElement('div');
+                stepDiv.className = "p-3 rounded-lg bg-[#1a1235] border border-purple-500/20 text-purple-200 text-sm font-mono flex items-center justify-between";
+                var stepContent = appState.currentStepsArray[i].trim();
+                
+                if (!stepContent.startsWith('$') && !stepContent.startsWith('\\(')) {
+                    stepContent = '$' + stepContent + '$';
+                }
+
+                stepDiv.innerHTML = '<span>' + stepContent + '</span> <i class="fa-solid fa-check text-emerald-400 ms-2 shrink-0"></i>';
+                box.appendChild(stepDiv);
+            }
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([box]).catch(function (err) { console.error(err); });
+            }
+        }
+
+        function checkUserAnswer() {
+            var mathInput = document.getElementById('user-input');
+            var rawUserAns = mathInput ? mathInput.value.trim() : "";
+            var feedback = document.getElementById('feedback-msg');
+
+            if (!rawUserAns) {
+                feedback.innerText = "Please enter your answer/step first.";
+                feedback.style.color = "#fca5a5";
+                return;
+            }
+
+            var stepsArr = appState.currentStepsArray;
+            if (!stepsArr || stepsArr.length === 0) {
+                feedback.innerText = "No step guidance found for this problem.";
+                feedback.style.color = "#fca5a5";
+                return;
+            }
+
+            if (appState.visibleStepCount >= stepsArr.length) {
+                feedback.innerText = "You have already completed all available steps!";
+                feedback.style.color = "#c084fc";
+                return;
+            }
+
+            feedback.innerText = "Evaluating step...";
+            feedback.style.color = "#c084fc";
+
+            fetch('/api/evaluate-user-step', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_answer: rawUserAns,
+                    expected_step: stepsArr[appState.visibleStepCount]
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.is_correct) {
+                    appState.visibleStepCount++;
+                    feedback.innerText = "Correct! Step " + appState.visibleStepCount + " verified.";
+                    feedback.style.color = "#34d399";
+
+                    sendUserDataToDB(rawUserAns, "Correct");
+                    renderPracticeSteps();
+                    if (mathInput) mathInput.value = '';
+
+                    var stepsBox = document.getElementById('practice-steps-box');
+                    stepsBox.scrollTop = stepsBox.scrollHeight;
+
+                    if (appState.visibleStepCount === stepsArr.length) {
+                        feedback.innerText = "Congratulations! You completed all steps correctly.";
+                        feedback.style.color = "#34d399";
+                    }
+                } else {
+                    feedback.innerText = data.message || "Incorrect step. Please check your math.";
+                    feedback.style.color = "#fca5a5";
+                    sendUserDataToDB(rawUserAns, "Incorrect");
+                }
+            })
+            .catch(err => {
+                console.error("Evaluation error:", err);
+                feedback.innerText = "Error checking answer. Please try again.";
+                feedback.style.color = "#fca5a5";
+            });
+        }
+
+        function showNextStep() {
+            var stepsArr = appState.currentStepsArray;
+            var feedback = document.getElementById('feedback-msg');
+
+            if (!stepsArr || stepsArr.length === 0) {
+                feedback.innerText = "No steps available.";
+                feedback.style.color = "#fca5a5";
+                return;
+            }
+
+            if (appState.visibleStepCount < stepsArr.length) {
+                appState.visibleStepCount++;
+                renderPracticeSteps();
+                sendUserDataToDB("Requested Hint/Next Step", "Show Step");
+
+                feedback.innerText = "Step " + appState.visibleStepCount + " revealed.";
+                feedback.style.color = "#c084fc";
+
+                var stepsBox = document.getElementById('practice-steps-box');
+                stepsBox.scrollTop = stepsBox.scrollHeight;
+
+                if (appState.visibleStepCount === stepsArr.length) {
+                    feedback.innerText = "All solution steps have been displayed.";
+                    feedback.style.color = "#34d399";
+                }
+            } else {
+                feedback.innerText = "All solution steps are already displayed.";
+                feedback.style.color = "#c084fc";
+            }
+        }
+
+        function sendUserDataToDB(userAnswer, status) {
+            if (!appState.userId && !appState.userEmail) return;
+
+            fetch('/api/save-user-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: appState.userId,
+                    email: appState.userEmail,
+                    problem_id: appState.currentProblemId,
+                    user_answer: userAnswer,
+                    status: status
+                })
+            }).catch(err => console.error("Error saving step history:", err));
+        }
+    </script>
+</body>
+</html>

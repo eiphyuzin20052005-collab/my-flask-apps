@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathGuideline</title>
+
+<!-- MathJax for rendering LaTeX math formulas -->
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+
+<!-- AOS (Animate On Scroll) Library CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    min-height:100vh;
+    background-color: #0b0714;
+    color: #e9d5ff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Premium Dark Navbar */
+.navbar{
+    background: #130c25;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2d1a4d;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo{
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: #f3e8ff;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-links a.nav-item {
+    text-decoration: none;
+    color: #c084fc;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.nav-links a.nav-item:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+}
+
+.navbar a.profile-icon{
+    background: #1c1236;
+    color: #c084fc;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    border: 1px solid #3b1f6e;
+    cursor: pointer;
+}
+
+.navbar a.profile-icon:hover {
+    transform: scale(1.05);
+    background: #2e185b;
+    color: #ffffff;
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Hero Section */
+.hero{
+    background: linear-gradient(135deg, #241042 0%, #120726 100%);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+    margin: 24px 40px 30px 40px;
+    border-radius: 16px;
+    border: 1px solid #3b1f6e;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hero h1{
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+/* Horizontal Quiz Buttons Container */
+.horizontal-quiz-section {
+    margin: 0 40px 30px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-horizontal-level {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    text-transform: lowercase;
+    text-align: center;
+}
+
+.btn-horizontal-level:hover {
+    transform: translateY(-2px);
+}
+
+.btn-basic-horizontal {
+    background-color: #059669;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+.btn-basic-horizontal:hover {
+    background-color: #10b981;
+}
+
+.btn-inter-horizontal {
+    background-color: #d97706;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+.btn-inter-horizontal:hover {
+    background-color: #eab308;
+}
+
+.btn-adv-horizontal {
+    background-color: #9333ea;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+.btn-adv-horizontal:hover {
+    background-color: #a855f7;
+}
+
+/* Top 5 Most Solved Problems Styling */
+.top-problems-card {
+    background: #130c25;
+    border: 1px solid #2d1a4d;
+    border-radius: 16px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.top-problems-card:hover {
+    border-color: #7e22ce;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(126, 34, 206, 0.3);
+}
+
+.problem-badge {
+    font-size: 10px;
+    font-weight: 800;
+    background: #1e1035;
+    color: #c084fc;
+    border: 1px solid #3b1f6e;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.solved-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6ee7b7;
+    background: #064e3b;
+    border: 1px solid #047857;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* 3-Column Workspace */
+.category-workspace {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 10px 40px 40px 40px;
+    align-items: start;
+}
+
+.category{
+    background: #130c25;
+    border: 1px solid #2d1a4d;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.category h2{
+    font-size: 11px;
+    font-weight: 800;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.card:hover { transform: translateY(-2px); }
+
+.card-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon{
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #1e1035;
+    border: 1px solid #3b1f6e;
+    flex-shrink: 0;
+}
+
+.card h3{
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.start-btn{
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* Category Theme Colors */
+.category-basic h2 { background: #064e3b; color: #6ee7b7; border: 1px solid #047857; }
+.category-basic .card { background: #0b291e; border-color: #124d36; }
+.category-basic .card:hover { border-color: #10b981; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2); }
+.category-basic .card h3 { color: #a7f3d0; }
+.category-basic .start-btn { background: #059669; color: white; }
+.category-basic .start-btn:hover { background: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+
+.category-intermediate h2 { background: #713f12; color: #fde047; border: 1px solid #a16207; }
+.category-intermediate .card { background: #2e1d08; border-color: #54340c; }
+.category-intermediate .card:hover { border-color: #eab308; box-shadow: 0 4px 16px rgba(234, 179, 8, 0.2); }
+.category-intermediate .card h3 { color: #fef08a; }
+.category-intermediate .start-btn { background: #d97706; color: white; }
+.category-intermediate .start-btn:hover { background: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.4); }
+
+.category-advanced h2 { background: #581c87; color: #f0abfc; border: 1px solid #7e22ce; }
+.category-advanced .card { background: #260c38; border-color: #4c1d6e; }
+.category-advanced .card:hover { border-color: #c084fc; box-shadow: 0 4px 16px rgba(192, 132, 252, 0.25); }
+.category-advanced .card h3 { color: #f5d0fe; }
+.category-advanced .start-btn { background: #9333ea; color: white; }
+.category-advanced .start-btn:hover { background: #a855f7; box-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
+
+/* Overview Slider Section */
+.overview-section { padding: 30px 40px 60px 40px; }
+.section-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; color: #f3e8ff; text-align: center; text-shadow: 0 0 12px rgba(168, 85, 247, 0.3); }
+.section-subtitle { font-size: 13px; color: #a78bfa; text-align: center; margin-bottom: 30px; }
+.overview-slider-wrapper { max-width: 930px; margin: 0 auto; display: flex; align-items: center; gap: 20px; position: relative; }
+.overview-slider-container { flex: 1; background: #130c25; border: 1px solid #2d1a4d; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); overflow: hidden; }
+.overview-slider-track { display: flex; transition: transform 0.4s ease-in-out; width: 100%; }
+.overview-slide { min-width: 100%; display: flex; align-items: stretch; }
+.overview-slide-left { flex: 1; background: #180d30; color: #e9d5ff; padding: 30px 40px 30px 30px; display: flex; flex-direction: column; justify-content: flex-start; border-top-left-radius: 20px; border-bottom-left-radius: 20px; position: relative; border-right: 1px solid #2d1a4d; }
+.overview-slide-left h3 { font-size: 15px; font-weight: 800; color: #f3e8ff; margin-bottom: 8px; }
+.overview-slide-left p { font-size: 12px; color: #e1cbcb; line-height: 1.5; margin-bottom: 10px; text-align: justify; }
+.overview-slide-right { flex: 1; background: linear-gradient(135deg, #241042 0%, #120726 100%); color: white; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top-right-radius: 20px; border-bottom-right-radius: 20px; position: relative; border-left: 1px solid #3b1f6e; }
+.overview-slide-right h2 { font-size: 24px; font-weight: 800; line-height: 1.3; margin-bottom: 12px; color: #ffffff; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+.overview-slide-right p { font-size: 13px; color: #a78bfa; line-height: 1.5; }
+.slider-btn { background: #1c1236; color: #c084fc; border: 1px solid #3b1f6e; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
+.slider-btn:hover { background: #2e185b; color: #fff; border-color: #a855f7; box-shadow: 0 0 16px rgba(168, 85, 247, 0.6); transform: scale(1.05); }
+.slider-dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.slider-dot { width: 8px; height: 8px; border-radius: 50%; background: #3b1f6e; border: none; cursor: pointer; transition: all 0.2s ease; }
+.slider-dot.active { background: #c084fc; box-shadow: 0 0 8px rgba(192, 132, 252, 0.6); transform: scale(1.3); }
+
+/* Earth Design Section & Stats */
+.earth-design-section { padding: 20px 40px 50px 40px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.earth-content-wrapper { display: flex; align-items: center; justify-content: center; gap: 50px; margin-top: 20px; flex-wrap: wrap; }
+.earth-container { position: relative; width: 200px; height: 200px; }
+.earth-globe { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #3b82f6, #1e3a8a 60%, #090d16 90%); box-shadow: inset -20px -20px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(59, 130, 246, 0.4); position: relative; overflow: hidden; }
+.earth-globe::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255, 255, 255, 0.05) 15px, rgba(255, 255, 255, 0.05) 16px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255, 255, 255, 0.05) 15px, rgba(255, 255, 255, 0.05) 16px); animation: rotateGrid 25s linear infinite; opacity: 0.6; }
+.earth-orbit { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; border: 1px dashed rgba(168, 85, 247, 0.3); border-radius: 50%; animation: spinOrbit 15s linear infinite; pointer-events: none; }
+.earth-satellite { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 12px; background: #c084fc; border-radius: 50%; box-shadow: 0 0 10px #c084fc; }
+@keyframes rotateGrid { 0% { transform: translate(0, 0); } 100% { transform: translate(20px, 20px); } }
+@keyframes spinOrbit { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+.earth-stats-panel { display: flex; flex-direction: row; gap: 16px; text-align: left; flex-wrap: wrap; }
+.stat-card { background: #130c25; border: 1px solid #2d1a4d; padding: 14px 20px; border-radius: 14px; display: flex; align-items: center; gap: 16px; min-width: 200px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); transition: all 0.2s ease; }
+.stat-card:hover { border-color: #7e22ce; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(126, 34, 206, 0.3); }
+.stat-icon { font-size: 20px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: #1e1035; border: 1px solid #3b1f6e; flex-shrink: 0; }
+.stat-info h4 { font-size: 11px; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.stat-info .stat-value { font-size: 18px; font-weight: 800; color: #f3e8ff; text-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
+.earth-text { font-size: 13px; color: #a78bfa; max-width: 550px; margin-top: 20px; line-height: 1.5; }
+
+/* Footer Styling */
+.footer { background: #130c25; border-top: 1px solid #2d1a4d; padding: 30px 40px; margin-top: auto; display: flex; justify-content: space-between; align-items: center; color: #a78bfa; font-size: 13px; }
+.footer-logo { font-size: 16px; font-weight: 800; color: #f3e8ff; margin-bottom: 4px; }
+
+/* Modal General Styling */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(11, 7, 20, 0.85); backdrop-filter: blur(8px); }
+.modal-content { background-color: #130c25; border: 1px solid #3b1f6e; margin: 6% auto; padding: 32px; border-radius: 20px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative; color: #e9d5ff; }
+.close-btn { position: absolute; right: 20px; top: 18px; font-size: 24px; font-weight: bold; color: #a78bfa; cursor: pointer; }
+.close-btn:hover { color: #ffffff; }
+
+/* Admin/User Unified Login Modal */
+.modal-content h2 { margin-bottom: 20px; color: #f3e8ff; font-size: 20px; font-weight: 800; }
+.form-group { margin-bottom: 16px; text-align: left; }
+.form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #c084fc; }
+.form-group input, .form-group select { width: 100%; padding: 12px 14px; background: #1c1236; border: 1px solid #3b1f6e; color: #ffffff; border-radius: 10px; outline: none; font-size: 14px; transition: all 0.2s ease; }
+.form-group input:focus, .form-group select:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2); }
+.login-btn { width: 100%; padding: 12px; background: #9333ea; color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 8px; transition: all 0.2s ease; }
+.login-btn:hover { background: #a855f7; box-shadow: 0 0 12px rgba(168, 85, 247, 0.4); }
+
+/* Interactive Quiz Modal Styling */
+.quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #2d1a4d; padding-bottom: 12px; }
+.quiz-title { font-size: 18px; font-weight: 800; color: #f3e8ff; }
+.quiz-progress { font-size: 12px; font-weight: 700; color: #c084fc; background: #1e1035; border: 1px solid #3b1f6e; padding: 4px 10px; border-radius: 6px; }
+.quiz-question { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 20px; line-height: 1.5; text-align: center; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.quiz-option-btn { background: #1c1236; border: 1px solid #3b1f6e; color: #e9d5ff; padding: 12px 16px; border-radius: 10px; text-align: left; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; }
+.quiz-option-btn:hover { background: #2e185b; border-color: #a855f7; color: #ffffff; }
+.quiz-option-btn.correct { background: #064e3b !important; border-color: #10b981 !important; color: #6ee7b7 !important; }
+.quiz-option-btn.incorrect { background: #7f1d1d !important; border-color: #ef4444 !important; color: #fca5a5 !important; }
+.quiz-feedback { margin-bottom: 15px; font-size: 14px; font-weight: 700; text-align: center; min-height: 20px; }
+.quiz-feedback.correct { color: #6ee7b7; }
+.quiz-feedback.incorrect { color: #fca5a5; }
+.quiz-footer { display: flex; justify-content: space-between; align-items: center; }
+.quiz-next-btn { padding: 10px 20px; background: #9333ea; color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s ease; }
+.quiz-next-btn:hover { background: #a855f7; box-shadow: 0 0 12px rgba(168, 85, 247, 0.4); }
+.quiz-next-btn:disabled { background: #3b1f6e; color: #a78bfa; cursor: not-allowed; opacity: 0.6; }
+
+/* Quiz Result Screen */
+.quiz-result { text-align: center; padding: 20px 0; }
+.quiz-score-badge { font-size: 36px; font-weight: 800; color: #c084fc; text-shadow: 0 0 16px rgba(192, 132, 252, 0.5); margin: 16px 0; }
+.quiz-retry-btn { padding: 12px 28px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s ease; margin-top: 10px; }
+.quiz-retry-btn:hover { background: #059669; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); }
+
+@media (max-width: 968px) {
+    .category-workspace { grid-template-columns: 1fr; }
+    .overview-section, .category-workspace, .video-section, .earth-design-section { padding-left: 20px; padding-right: 20px; }
+    .hero { margin: 20px 20px 40px 20px; }
+    .navbar { padding: 16px 20px; }
+    .horizontal-quiz-section { margin: 0 20px 30px 20px; flex-direction: column; }
+    .video-grid { grid-template-columns: 1fr; }
+    .overview-slide { flex-direction: column; }
+    .overview-slide-left, .overview-slide-right { border-radius: 0; padding: 24px; border: none; }
+    .overview-slider-wrapper { gap: 10px; }
+    .slider-btn { width: 36px; height: 36px; font-size: 14px; }
+    .earth-content-wrapper { flex-direction: column; gap: 30px; }
+    .earth-stats-panel { width: 100%; flex-direction: column; }
+    .stat-card { width: 100%; }
+    .footer { flex-direction: column; gap: 16px; text-align: center; padding: 20px; }
+}
+
+/* Video Section */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.video-card {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+}
+
+.video-embed-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 18px 18px 0 0;
+    background: #000;
+}
+
+.video-embed-container video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div class="navbar">
+    <div class="logo">Math Problem Assistant</div>
+    <div class="nav-links">
+        <a href="#categorySection" class="nav-item">Category</a>
+    <!-- openQuizModal() အစား Quiz Buttons နေရာသို့ smooth scroll သွားရန် ပြောင်းထားသည် -->
+        <a href="#quizButtonsSection" class="nav-item">Interactive Quiz</a>
+        <a href="#overviewSection" class="nav-item">Overview</a>
+        <a href="#videoSection" class="nav-item">Video</a>
+        {% if session.get('user_logged_in') %}
+            <a href="/user/profile/{{ session.get('user_id') }}" class="nav-item" style="color:#34d399;">Profile</a>
+        {% else %}
+            <a class="profile-icon" onclick="openAdminModal()">👤</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Welcome Hero -->
+<div class="hero" data-aos="fade-up">
+    <h1>Ready to Level Up Your Math Skills?</h1>
+    <p style="color: #a78bfa; font-size: 14px; margin-top: 8px; margin-bottom: 0px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+        Choose a difficulty level below or take our interactive quiz to challenge yourself!
+    </p>
+    <div style="font-size: 22px; font-weight: 800; color: #ffffff; margin-top: 18px; ">Start Your Math Skills</div>
+</div>
+
+<!-- Top 5 Most Solved Problems Section -->
+<div class="top-problems-section" style="margin: 0 40px 20px 40px;">
+    <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 10px; color: #f3e8ff; display: flex; align-items: center; gap: 5px;">
+        🔥 Top 5 Most Solved Problems
+    </h2>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        {% if top_problems %}
+            {% for problem in top_problems %}
+            <div class="top-problems-card">
+                <div>
+                    <span class="problem-badge">
+                        {{ problem.category_name }}
+                    </span>
+                    <h3 style="font-size: 15px; font-weight: 700; margin-top: 5px; color: #f3e8ff;">
+                        {{ problem.question_text | format_math | safe }}
+                    </h3>
+                </div>
+                <div>
+                    <span class="solved-badge">
+                        ✅ Solved {{ problem.solve_count }} times
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #a78bfa; font-size: 14px;">No problem statistics available yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Horizontal Quiz Level Buttons (Top 5 နှင့် Category Card များကြား) -->
+<div class="horizontal-quiz-section" id="quizButtonsSection" data-aos="fade-up">
+    <button class="btn-horizontal-level btn-basic-horizontal" onclick="startDynamicQuiz('basic')">basic level quizz</button>
+    <button class="btn-horizontal-level btn-inter-horizontal" onclick="startDynamicQuiz('intermediate')">intermediate level quizz</button>
+    <button class="btn-horizontal-level btn-adv-horizontal" onclick="startDynamicQuiz('advanced')">advanced level quizz</button>
+</div>
+
+<!-- Workspace Grid (Database Loop For Dynamic Routing) -->
+<div class="category-workspace" id="categorySection">
+
+    <!-- Basic Level -->
+    <div class="category category-basic" data-aos="fade-up">
+        <h2>Basic Level</h2>
+        <div class="container">
+            {% for cat in categories %}
+                {% if cat.level == "Basic" %}
+                <div class="card">
+                    <div class="card-header-row">
+                        <div class="icon">📐</div>
+                        <h3>{{ cat.category_name }}</h3>
+                    </div>
+                    <a href="/category/{{ cat.category_id }}" class="start-btn">Start</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Intermediate Level -->
+    <div class="category category-intermediate" data-aos="fade-up" data-aos-delay="150">
+        <h2>Intermediate Level</h2>
+        <div class="container">
+            {% for cat in categories %}
+                {% if cat.level == "Intermediate" %}
+                <div class="card">
+                    <div class="card-header-row">
+                        <div class="icon">📐</div>
+                        <h3>{{ cat.category_name }}</h3>
+                    </div>
+                    <a href="/category/{{ cat.category_id }}" class="start-btn">Start</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Advanced Level -->
+    <div class="category category-advanced" data-aos="fade-up" data-aos-delay="300">
+        <h2>Advanced Level</h2>
+        <div class="container">
+            {% for cat in categories %}
+                {% if cat.level == "Advanced" %}
+                <div class="card">
+                    <div class="card-header-row">
+                        <div class="icon">📐</div>
+                        <h3>{{ cat.category_name }}</h3>
+                    </div>
+                    <a href="/category/{{ cat.category_id }}" class="start-btn">Start</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+<!-- CAROUSEL OVERVIEW SECTION -->
+<div class="overview-section" id="overviewSection" data-aos="fade-up">
+    <div class="section-title">Topic Overviews</div>
+    <div class="section-subtitle">Explore key concepts across various mathematical domains</div>
+    
+    <div class="overview-slider-wrapper">
+        <button class="slider-btn" id="sliderPrev">&#10094;</button>
+        
+        <div class="overview-slider-container">
+            <div class="overview-slider-track" id="sliderTrack">
+                <!-- Slides injected dynamically via JavaScript -->
+            </div>
+        </div>
+
+        <button class="slider-btn" id="sliderNext">&#10095;</button>
+    </div>
+
+    <div class="slider-dots-container" id="sliderDots"></div>
+</div>
+
+<!-- EARTH DESIGN SECTION & DYNAMIC STATS -->
+<div class="earth-design-section" data-aos="fade-up">
+    
+    <div class="earth-content-wrapper">
+        <div class="earth-container">
+            <div class="earth-orbit">
+                <div class="earth-satellite"></div>
+            </div>
+            <div class="earth-globe"></div>
+        </div>
+
+        <!-- Backend/Database Data -->
+        <div class="earth-stats-panel">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <h4>Total Students</h4>
+                    <div class="stat-value" id="totalStudents">{{ total_students if total_students else 0 }}</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-info">
+                    <h4>Total Problems </h4>
+                    <div class="stat-value" id="totalProblems">{{ total_problems if total_problems else 0 }}</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-info">
+                    <h4>Total Categories</h4>
+                    <div class="stat-value" id="totalCategories">{{ total_categories if total_categories else 0 }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Video Section -->
+<div class="video-section" id="videoSection">
+    <div class="section-title" data-aos="fade-up">User Guideline</div>
+
+    <div class="section-subtitle" data-aos="fade-up">
+        Watch guided video lessons directly on the page
+    </div>
+
+    <div class="video-grid">
+
+        <!-- Video 1 -->
+        <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="video-embed-container">
+                <video autoplay muted loop playsinline controls>
+                    <source src="{{ url_for('static', filename='profile1.mp4') }}" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-info">
+
+            </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="video-embed-container">
+                <video autoplay muted loop playsinline controls>
+                    <source src="{{ url_for('static', filename='profile2.mp4') }}" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-info">
+                
+            </div>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="video-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="video-embed-container">
+                <video autoplay muted loop playsinline controls>
+                    <source src="{{ url_for('static', filename='profile3.mp4') }}" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-info">
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div>
+        <div class="footer-logo">Math Problem Assistant</div>
+        <p>&copy; 2026 Math Problem Assistant. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Unified Admin / Student Login Modal Structure -->
+<div id="adminModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAdminModal()">&times;</span>
+        <h2> Login</h2>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label>Login Role</label>
+                <select name="role" id="loginRole" onchange="toggleRoleFields()" required>
+                    <option value="user">Student User</option>
+                    <option value="admin">Administrator</option>
+                </select>
+            </div>
+            <div class="form-group" id="adminNameGroup" style="display: none;">
+                <label>Admin Name</label>
+                <input type="text" name="name" placeholder="Enter admin name">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter email address" required>
+            </div>
+            <div class="form-group" id="adminPassGroup" style="display: none;">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password">
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- Dynamic Math Quiz Modal -->
+<div id="quizModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeQuizModal()">&times;</span>
+
+        <!-- Quiz Screen -->
+        <div id="quizContainer" style="display: block;">
+            <div class="quiz-header">
+                <div class="quiz-title" id="quizCategoryTitle">Math Quiz</div>
+                <div class="quiz-progress" id="quizProgress">Question 1 / 10</div>
+            </div>
+            <div class="quiz-question" id="quizQuestionText">Loading Question...</div>
+            <div class="quiz-options" id="quizOptionsContainer">
+                <!-- Option buttons injected via JS -->
+            </div>
+            <div class="quiz-feedback" id="quizFeedbackText"></div>
+            <div class="quiz-footer">
+                <span id="quizScoreText" style="font-size: 13px; color: #a78bfa;">Score: 0</span>
+                <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Quiz Result Screen -->
+        <div id="quizResultContainer" class="quiz-result" style="display: none;">
+            <h2>Quiz Completed! 🎉</h2>
+            <p style="color: #a78bfa; margin-top: 8px;">All Marks:</p>
+            <div class="quiz-score-badge" id="finalScoreBadge">0 / 10</div>
+            <button class="quiz-retry-btn" onclick="closeQuizModal()">Back to Home 🔄</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Scripts -->
+<script>
+// AOS Animation Init
+AOS.init({ duration: 800, easing: 'ease-out-sine', once: false });
+
+function toggleRoleFields() {
+    var role = document.getElementById("loginRole").value;
+    var nameGrp = document.getElementById("adminNameGroup");
+    var passGrp = document.getElementById("adminPassGroup");
+    if (role === "admin") {
+        nameGrp.style.display = "block";
+        passGrp.style.display = "block";
+    } else {
+        nameGrp.style.display = "none";
+        passGrp.style.display = "none";
+    }
+}
+
+// Topic Overviews Data & Slider Setup
+const allTopics = [
+    { icon: "➕", title: "Basic Addition Operations", level: "Basic", desc: "Master the basics of addition with clear, step-by-step solutions. Learn how to add whole numbers, decimals, fractions, and algebraic terms accurately and confidently." },
+    { icon: "➖", title: "Subtraction Methods", level: "Basic", desc: "Understand subtraction through easy-to-follow explanations. Solve problems involving integers, decimals, fractions, and algebraic expressions." },
+    { icon: "✖️", title: "Multiplication Rules", level: "Basic", desc: "Build strong multiplication skills by solving problems with numbers, fractions, decimals, and variables." },
+    { icon: "➗", title: "Division Techniques", level: "Basic", desc: "Practice division with detailed guidance on whole numbers, decimals, fractions, and algebraic expressions." },
+    { icon: "½", title: "Fraction Fundamentals", level: "Basic", desc: "Learn the fundamentals of fractions, including simplifying, comparing, converting, and performing arithmetic operations." },
+    { icon: "🟰", title: "Linear Equation Solving", level: "Intermediate", desc: "Explore variables, constants, coefficients, and mathematical expressions. Learn to simplify and evaluate algebraic equations." },
+    { icon: "²", title: "Factorization Tricks", level: "Intermediate", desc: "Understand how to break algebraic expressions into simpler factors using quadratic methods and common factors." },
+    { icon: "√", title: "Square Root Simplification", level: "Intermediate", desc: "Develop your understanding of square roots by simplifying radicals and solving real mathematical problems." },
+    { icon: "📐", title: "Algebraic Concepts", level: "Intermediate", desc: "Learn how to calculate likelihoods, solve polynomials, and apply linear models." },
+    { icon: "📊", title: "Probability Theory", level: "Advanced", desc: "Study outcomes, sample spaces, and probability rules to make accurate statistical predictions." },
+    { icon: "📐", title: "Trigonometry Ratios", level: "Advanced", desc: "Explore sine, cosine, and tangent ratios along with identities and practical geometric applications." },
+    { icon: "🔢", title: "Matrix Algebra", level: "Advanced", desc: "Understand matrix operations including addition, scalar multiplication, determinants, and inverses." }
+];
+
+const track = document.getElementById('sliderTrack');
+const dotsContainer = document.getElementById('sliderDots');
+let currentIndex = 0;
+
+allTopics.forEach((topic, index) => {
+    const slide = document.createElement('div');
+    slide.className = 'overview-slide';
+    slide.innerHTML = `
+        <div class="overview-slide-left">
+            <h3>${topic.icon} ${topic.title}</h3>
+            <p><strong>Level:</strong> ${topic.level}</p>
+            <p>${topic.desc}</p>
+            <p style="margin-top:auto; font-size:11px; color:#a78bfa;">Step-by-step solutions, formulas, and interactive tests available.</p>
+        </div>
+        <div class="overview-slide-right">
+            <h2>Get Started with ${topic.title}!</h2>
+            <p>Master this topic instantly with expert step-by-step breakdowns and interactive problem solvers.</p>
+        </div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+});
+
+function updateSlider() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    document.querySelectorAll('.slider-dot').forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentIndex);
+    });
+}
+
+function goToSlide(index) {
+    currentIndex = index;
+    updateSlider();
+}
+
+document.getElementById('sliderNext').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % allTopics.length;
+    updateSlider();
+});
+
+document.getElementById('sliderPrev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + allTopics.length) % allTopics.length;
+    updateSlider();
+});
+
+// Admin Modal Functions
+function openAdminModal() {
+    document.getElementById("adminModal").style.display = "block";
+}
+
+function closeAdminModal() {
+    document.getElementById("adminModal").style.display = "none";
+}
+
+// DYNAMIC MATH GENERATOR SYSTEM
+let currentLevel = '';
+let currentQuestionIndex = 0;
+let quizScore = 0;
+let currentQuestion = null;
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Helper: Greatest Common Divisor (Fraction simplify ရန်အတွက်)
+function gcd(a, b) {
+  return b === 0 ? Math.abs(a) : gcd(b, a % b);
+}
+
+function generateMathQuestion(level) {
+  let questionText = "";
+  let correctAnswer = "";
+  let isStringAnswer = false; // Numeric မဟုတ်ဘဲ String အဖြေ (ဥပမာ- Fraction, Matrix) အတွက်
+
+  if (level === 'basic') {
+    // Basic: Addition, Subtraction, Multiplication, Division, Fraction Basic
+    const subTopic = getRandomInt(1, 5);
+
+    if (subTopic === 1) { // Addition
+      let a = getRandomInt(10, 99);
+      let b = getRandomInt(10, 99);
+      correctAnswer = a + b;
+      questionText = `$${a} + ${b} = ?$`;
+
+    } else if (subTopic === 2) { // Subtraction
+      let a = getRandomInt(20, 99);
+      let b = getRandomInt(1, a);
+      correctAnswer = a - b;
+      questionText = `$${a} - ${b} = ?$`;
+
+    } else if (subTopic === 3) { // Multiplication
+      let a = getRandomInt(2, 12);
+      let b = getRandomInt(2, 12);
+      correctAnswer = a * b;
+      questionText = `$${a} \\times ${b} = ?$`;
+
+    } else if (subTopic === 4) { // Division
+      let divisor = getRandomInt(2, 12);
+      let ans = getRandomInt(2, 12);
+      let dividend = divisor * ans;
+      correctAnswer = ans;
+      questionText = `$${dividend} \\div ${divisor} = ?$`;
+
+    } else { // Fraction Basic (Simplification)
+      let common = getRandomInt(2, 5);
+      let num = getRandomInt(1, 7);
+      let den = getRandomInt(num + 1, 8); // Proper fraction
+      let numExpanded = num * common;
+      let denExpanded = den * common;
+      
+      let g = gcd(num, den);
+      let simNum = num / g;
+      let simDen = den / g;
+
+      correctAnswer = `${simNum}/${simDen}`;
+      isStringAnswer = true;
+      questionText = `Simplify the fraction: $\\frac{${numExpanded}}{${denExpanded}}$`;
+    }
+
+  } else if (level === 'intermediate') {
+    // Intermediate: Linear, Algebraic, Factorization, Square Root
+    const subTopic = getRandomInt(1, 4);
+
+    if (subTopic === 1) { // Linear Equation (ax + b = c)
+      let x = getRandomInt(1, 10);
+      let a = getRandomInt(2, 6);
+      let b = getRandomInt(1, 15);
+      let c = a * x + b;
+      correctAnswer = x;
+      questionText = `Solve for $x$: $${a}x + ${b} = ${c}$`;
+
+    } else if (subTopic === 2) { // Algebraic Evaluation (Evaluate ax^2 + b for x)
+      let x = getRandomInt(2, 5);
+      let a = getRandomInt(1, 4);
+      let b = getRandomInt(1, 10);
+      correctAnswer = a * (x * x) + b;
+      questionText = `Evaluate $${a === 1 ? '' : a}x^2 + ${b}$ when $x = ${x}$`;
+
+    } else if (subTopic === 3) { // Factorization (x^2 - a^2 = (x-a)(x+a))
+      let a = getRandomInt(2, 9);
+      let aSq = a * a;
+      correctAnswer = `(x - ${a})(x + ${a})`;
+      isStringAnswer = true;
+      questionText = `Factorize: $x^2 - ${aSq}$`;
+
+    } else { // Square Root
+      let root = getRandomInt(4, 15);
+      let num = root * root;
+      correctAnswer = root;
+      questionText = `$$\\sqrt{${num}} = ?$$`;
+    }
+
+  } else if (level === 'advanced') {
+    // Advanced: Probability, Trigonometry, Matrix
+    const subTopic = getRandomInt(1, 3);
+
+    if (subTopic === 1) { // Probability
+      const probType = getRandomInt(1, 2);
+      if (probType === 1) { // Coin flip (heads/tails probability)
+        correctAnswer = "1/2";
+        isStringAnswer = true;
+        questionText = `What is the probability of getting Heads on a fair coin toss?`;
+      } else { // Dice roll (Probability of getting a specific number or condition)
+        let targetNum = getRandomInt(1, 6);
+        correctAnswer = "1/6";
+        isStringAnswer = true;
+        questionText = `A standard 6-sided die is rolled. What is $P(${targetNum})$?`;
+      }
+
+    } else if (subTopic === 2) { // Trigonometry
+      const trigAngles = [
+        { name: "\\sin(30^\\circ)", val: "1/2" },
+        { name: "\\sin(90^\\circ)", val: "1" },
+        { name: "\\cos(0^\\circ)", val: "1" },
+        { name: "\\cos(60^\\circ)", val: "1/2" },
+        { name: "\\tan(45^\\circ)", val: "1" }
+      ];
+      let item = trigAngles[getRandomInt(0, trigAngles.length - 1)];
+      correctAnswer = item.val;
+      isStringAnswer = true;
+      questionText = `Evaluate: $${item.name}$`;
+
+    } else { // Matrix (Determinant of 2x2 matrix)
+      let a = getRandomInt(1, 5);
+      let b = getRandomInt(1, 5);
+      let c = getRandomInt(1, 5);
+      let d = getRandomInt(1, 5);
+      let det = (a * d) - (b * c);
+      correctAnswer = det;
+      questionText = `Find the determinant of Matrix $\\begin{pmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{pmatrix}$`;
+    }
+  }
+
+  // Generate 4 Options (1 Correct + 3 Wrong Options)
+  let options = [correctAnswer];
+
+  if (!isStringAnswer) {
+    // Number Answer များအတွက် Fake Options ထုတ်ခြင်း
+    while (options.length < 4) {
+      let offset = getRandomInt(-5, 5);
+      let wrongAnswer = Number(correctAnswer) + offset;
+      if (offset !== 0 && !options.includes(wrongAnswer)) {
+        options.push(wrongAnswer);
+      }
+    }
+  } else {
+    // String Answer များအတွက် Fake Options ဖြည့်ဆည်းခြင်း
+    if (correctAnswer === "1/2") {
+      options = ["1/2", "1/4", "1/3", "2/3"];
+    } else if (correctAnswer === "1/6") {
+      options = ["1/6", "1/2", "1/3", "5/6"];
+    } else if (correctAnswer === "1") {
+      options = ["1", "0", "1/2", "\\sqrt{3}/2"];
+    } else if (typeof correctAnswer === 'string' && correctAnswer.includes('(x -')) {
+      let match = correctAnswer.match(/\d+/);
+      let num = match ? parseInt(match[0]) : 3;
+      options = [
+        `(x - ${num})(x + ${num})`,
+        `(x - ${num})^2`,
+        `(x + ${num})^2`,
+        `(x - ${num+1})(x + ${num-1})`
+      ];
+    } else if (typeof correctAnswer === 'string' && correctAnswer.includes('/')) {
+      let parts = correctAnswer.split('/');
+      let n = parseInt(parts[0]);
+      let d = parseInt(parts[1]);
+      options = [
+        `${n}/${d}`,
+        `${n+1}/${d}`,
+        `${n}/${d+1}`,
+        `${d}/${n}`
+      ];
+    } else {
+      options = [correctAnswer, "0", "1", "2"];
+    }
+  }
+
+  // Option များကို Random မွှေပေးခြင်း
+  options.sort(() => Math.random() - 0.5);
+
+  return {
+    questionText: questionText,
+    options: options,
+    correctAnswer: correctAnswer
+  };
+}
+
+function openQuizModal() {
+    startDynamicQuiz('basic');
+}
+
+function closeQuizModal() {
+    document.getElementById("quizModal").style.display = "none";
+}
+
+function startDynamicQuiz(level) {
+    currentLevel = level;
+    currentQuestionIndex = 0;
+    quizScore = 0;
+
+    document.getElementById("quizModal").style.display = "block";
+    document.getElementById("quizResultContainer").style.display = "none";
+    document.getElementById("quizContainer").style.display = "block";
+
+    let titleText = level.charAt(0).toUpperCase() + level.slice(1) + " Level Quiz";
+    document.getElementById("quizCategoryTitle").innerText = titleText;
+
+    loadDynamicQuestion();
+}
+
+function loadDynamicQuestion() {
+    document.getElementById("quizFeedbackText").innerText = "";
+    document.getElementById("quizFeedbackText").className = "quiz-feedback";
+    document.getElementById("quizNextBtn").disabled = true;
+
+    currentQuestion = generateMathQuestion(currentLevel);
+
+    document.getElementById("quizProgress").innerText = `Question ${currentQuestionIndex + 1} / 10`;
+    document.getElementById("quizQuestionText").innerHTML = currentQuestion.questionText;
+    document.getElementById("quizScoreText").innerText = `Score: ${quizScore}`;
+
+    const optionsContainer = document.getElementById("quizOptionsContainer");
+    optionsContainer.innerHTML = "";
+
+    currentQuestion.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-option-btn";
+        btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. $${opt}$</span>`;
+        btn.onclick = () => checkAnswer(opt, btn);
+        optionsContainer.appendChild(btn);
+    });
+
+    if (window.MathJax) {
+        MathJax.typesetPromise();
+    }
+}
+
+function checkAnswer(selectedOption, selectedBtn) {
+    const buttons = document.querySelectorAll(".quiz-option-btn");
+    buttons.forEach(btn => btn.disabled = true);
+
+    const feedback = document.getElementById("quizFeedbackText");
+
+    if (selectedOption.toString() === currentQuestion.correctAnswer.toString()) {
+        quizScore++;
+        feedback.innerText = "Correct! ";
+        feedback.className = "quiz-feedback correct";
+        selectedBtn.classList.add("correct");
+    } else {
+        feedback.innerText = `Incorrect! Correct Answer: ${currentQuestion.correctAnswer}`;
+        feedback.className = "quiz-feedback incorrect";
+        selectedBtn.classList.add("incorrect");
+        
+        buttons.forEach(btn => {
+            if(btn.innerText.includes(currentQuestion.correctAnswer.toString())) {
+                btn.classList.add("correct");
+            }
+        });
+    }
+
+    document.getElementById("quizScoreText").innerText = `Score: ${quizScore}`;
+    document.getElementById("quizNextBtn").disabled = false;
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < 10) {
+        loadDynamicQuestion();
+    } else {
+        showQuizResults();
+    }
+}
+
+function showQuizResults() {
+    document.getElementById("quizContainer").style.display = "none";
+    document.getElementById("quizResultContainer").style.display = "block";
+    document.getElementById("finalScoreBadge").innerText = `${quizScore} / 10`;
+}
+
+window.onclick = function(event) {
+    let adminModal = document.getElementById("adminModal");
+    let quizModal = document.getElementById("quizModal");
+    if (event.target == adminModal) {
+        adminModal.style.display = "none";
+    }
+    if (event.target == quizModal) {
+        quizModal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>

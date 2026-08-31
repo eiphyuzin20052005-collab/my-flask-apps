@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #fdf6f0; /* Dashboard နောက်ခံ အရောင် */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .profile-card {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1e4e4;
+        }
+
+        .profile-card h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .info {
+            margin-bottom: 18px;
+        }
+
+        .info label {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info p {
+            padding: 12px 15px;
+            background: #fdf2f2; /* Dashboard ရဲ့ Light Pink/Beige Tone */
+            border-radius: 10px;
+            color: #333;
+            font-weight: 500;
+            border: 1px solid #fae1e1;
+        
+        }
+        .btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #111827; /* Dark Theme Button */
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #374151;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-card">
+
+    <h1>Admin Profile</h1>
+
+    <div class="info">
+        <label>Name</label>
+        <p>{{ admin.username }}</p>
+    </div>
+
+    <div class="info">
+        <label>Password</label>
+        <p>{{ admin.password }}</p>
+    </div>
+
+    <a href="/admin" class="btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Problems</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            padding:20px;
+        }
+
+        .container{
+            display:flex;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        .problem{
+            width:30%;
+            padding:15px;
+            background:#f5f5f5;
+            border-radius:10px;
+        }
+
+        ul{
+            padding-left:20px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<h2>Math Problems</h2>
+
+<div class="container">
+
+    {% for p in problems %}
+
+    <div class="problem">
+
+        <h3>Question</h3>
+
+        <p>{{ p.question }}</p>
+
+        <h4>Solution</h4>
+
+        
+            {% for s in p.steps %}
+            <p>{{ s[0] }}</p>
+            {% endfor %}
+       
+
+        <h4>Answer</h4>
+
+        <p><b>{{ p.answer }}</b></p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
+
+
+from flask import Flask, render_template
+from db import get_connection
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+
+    db = get_connection()
+    cursor = db.cursor()
+
+    # get all problems
+    cursor.execute("""
+        SELECT problem_id, question_text, final_answer, category_id
+        FROM problems
+    """)
+
+    problems = cursor.fetchall()
+
+    all_data = []
+
+    for p in problems:
+
+        # get steps
+        cursor.execute("""
+            SELECT  step_text
+            FROM rules
+            WHERE category_id=%s
+           
+        """, (p[3],))
+
+        steps = cursor.fetchall()
+
+        all_data.append({
+            "question": p[1],
+            "answer": p[2],
+            "steps": steps
+        })
+    cursor.close()
+    db.close()
+
+    return render_template("P.html", problems=all_data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
